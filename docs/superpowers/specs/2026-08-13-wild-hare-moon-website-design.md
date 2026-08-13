@@ -84,13 +84,20 @@ them — no structural rebuild required, just content replacement.
 ## Deployment plan
 
 1. Build locally in `~/wild-hare-moon-website/`.
-2. Push to a new GitHub repo.
-3. Enable GitHub Pages for a live preview link Heather can review on any
-   device — mirrors the Weeds site's pre-launch review step.
+2. Push to a GitHub repo under Heather's own account (`wildharemoon/wild-hare-moon-website`)
+   so ownership sits with her from the start — matches the handoff-first
+   goal, and one less account (no Netlify) for her to manage long-term.
+3. GitHub Pages (via a `.github/workflows/pages.yml` Actions deploy,
+   since the publish root is `site/` not the repo root) for a live link
+   Heather can review on any device — mirrors the Weeds site's
+   pre-launch review step. **Live 2026-08-13:**
+   https://wildharemoon.github.io/wild-hare-moon-website/
 4. Once Heather approves content and confirms she controls the
-   `wildharemoon.com` registrar/DNS, connect Netlify + the custom domain as
-   a separate, explicitly-approved step (not automatic — domain/DNS changes
-   are outward-facing and hard to reverse).
+   `wildharemoon.com` registrar/DNS (bought through Square), connect the
+   custom domain directly in GitHub Pages settings (A records to GitHub's
+   IPs + a CNAME for `www`) as a separate, explicitly-approved step (not
+   automatic — domain/DNS changes are outward-facing and hard to
+   reverse).
 
 ## Out of scope (this version)
 
