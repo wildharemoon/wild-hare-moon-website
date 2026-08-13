@@ -58,7 +58,7 @@ function classCard(c) {
       <p class="text-ink/70 text-sm">${formatClassDate(c.date)}${where ? ' &middot; ' + where : ''}</p>
       ${c.notes ? `<p class="text-teal text-xs uppercase tracking-wide mt-2">${escapeHtml(c.notes)}</p>` : ''}
       ${hasSignupLink(c)
-        ? `<a href="${escapeHtml(c.link)}" class="inline-block mt-3 text-teal font-semibold text-sm hover:underline">Reserve a Spot &rarr;</a>`
+        ? `<a href="${escapeHtml(c.link)}" class="inline-block mt-3 px-5 py-1.5 rounded-full bg-ink text-cream font-semibold uppercase tracking-wider text-xs hover:bg-teal transition-colors">Link</a>`
         : ''}
     </div>`;
 }
