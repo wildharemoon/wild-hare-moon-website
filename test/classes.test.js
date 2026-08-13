@@ -5,6 +5,7 @@ import {
   parseGvizResponse,
   upcomingClasses,
   hasSignupLink,
+  normalizeSignupLink,
 } from '../site/assets/js/classes.js';
 
 test('parseGvizDate reads the Date(y,m,d) form with a zero-indexed month', () => {
@@ -66,6 +67,49 @@ test('hasSignupLink accepts http, https, and mailto only', () => {
   assert.equal(hasSignupLink({ link: 'https:foo' }), false);
   assert.equal(hasSignupLink({ link: '' }), false);
   assert.equal(hasSignupLink({}), false);
+});
+
+test('normalizeSignupLink completes a bare domain to https://', () => {
+  assert.equal(normalizeSignupLink('www.signup.com'), 'https://www.signup.com');
+  assert.equal(normalizeSignupLink('signup.com/class'), 'https://signup.com/class');
+});
+
+test('normalizeSignupLink completes a bare email to mailto:', () => {
+  assert.equal(normalizeSignupLink('wildharemoon@gmail.com'), 'mailto:wildharemoon@gmail.com');
+});
+
+test('normalizeSignupLink leaves an explicit scheme untouched, safe or not', () => {
+  assert.equal(normalizeSignupLink('https://example.com'), 'https://example.com');
+  assert.equal(normalizeSignupLink('mailto:x@example.com'), 'mailto:x@example.com');
+  // Still rejected downstream by hasSignupLink's allowlist — normalizing
+  // never widens what's accepted, it only fixes missing schemes.
+  assert.equal(normalizeSignupLink('javascript:alert(1)'), 'javascript:alert(1)');
+});
+
+test('normalizeSignupLink returns empty string for blank input', () => {
+  assert.equal(normalizeSignupLink(''), '');
+  assert.equal(normalizeSignupLink('   '), '');
+});
+
+test('parseGvizResponse normalizes a bare-domain Signup Link so hasSignupLink accepts it', () => {
+  const payload = {
+    table: {
+      cols: [
+        { label: 'Class' }, { label: 'Date' }, { label: 'Location' },
+        { label: 'Notes' }, { label: 'Signup Link' },
+      ],
+      rows: [
+        { c: [
+          { v: 'Wands' }, { v: 'Date(2026,8,10)' }, { v: 'place' },
+          null, { v: 'www.signup.com' },
+        ] },
+      ],
+    },
+  };
+  const text = `google.visualization.Query.setResponse(${JSON.stringify(payload)});`;
+  const rows = parseGvizResponse(text);
+  assert.equal(rows[0].link, 'https://www.signup.com');
+  assert.equal(hasSignupLink(rows[0]), true);
 });
 
 test('parseGvizResponse maps columns by label and tolerates missing cells', () => {

@@ -38,9 +38,26 @@ export function parseGvizResponse(text) {
       date:     parseGvizDate(cell(idx.date)),
       location: String(cell(idx.location)),
       notes:    String(cell(idx.notes)),
-      link:     String(cell(idx.link)),
+      link:     normalizeSignupLink(cell(idx.link)),
     };
   });
+}
+
+/**
+ * People fill in the Signup Link column with whatever they'd type in a
+ * browser bar — "www.signup.com", not "https://www.signup.com" — so a
+ * bare domain or email is completed to a safe scheme rather than dropped.
+ * Anything that already has an explicit scheme (a colon before any slash
+ * or whitespace) is passed through untouched and left for hasSignupLink's
+ * allowlist to accept or reject; this never widens what that allowlist lets
+ * through, it just stops "forgot the https://" from silently hiding a link.
+ */
+export function normalizeSignupLink(raw) {
+  const link = String(raw || '').trim();
+  if (!link) return '';
+  if (/^[a-z][a-z0-9+.-]*:/i.test(link)) return link;
+  if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(link)) return `mailto:${link}`;
+  return `https://${link}`;
 }
 
 /** Upcoming classes only, soonest first. A row needs both a Class name and a valid Date. */
