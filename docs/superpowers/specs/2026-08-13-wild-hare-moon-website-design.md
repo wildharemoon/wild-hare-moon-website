@@ -2,7 +2,7 @@
 
 ## Background
 
-Wild Hare Moon is Heather Rougeot's small business: handmade Wiccan-inspired
+Wild Hare Moon is Heather Rougeot's small business: handmade nature-inspired
 crafts, sold currently through a local store (Etsy likely later), plus
 in-person classes/workshops. This site replaces having no web presence beyond
 a business card. Design follows lessons learned building the Weeds band site
@@ -39,7 +39,7 @@ shop there.
 One page, smooth-scroll nav, sections in order:
 
 1. **Hero** — hare-and-moon mark, "Wild Hare Moon" wordmark, short tagline
-   (e.g. "Handmade Wiccan-inspired crafts & classes").
+   (e.g. "Handmade nature-inspired crafts & classes").
 2. **About** — Heather's story / what Wild Hare Moon is about. Placeholder
    copy until she provides her own.
 3. **Crafts** — showcase grid with placeholder categories (to be replaced
@@ -61,7 +61,7 @@ One page, smooth-scroll nav, sections in order:
 - **Palette:** mint/seafoam background (~`#a8d5cd`), black ink for
   illustration and primary text, cream/white for text panels and reversed
   text on dark elements. Cozy, handmade, craft-fair feel — not dark or
-  moody; the Wiccan theming shows through iconography (moon, hare) and
+  moody; the nature-inspired theming shows through iconography (moon, hare) and
   copy tone rather than a gothic color scheme.
 - **Motif:** the leaping-hare-over-crescent-moon mark reused as a small
   section-divider / scroll accent (sparkle + crescent flourish, echoing the
