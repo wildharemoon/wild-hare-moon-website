@@ -156,16 +156,8 @@
       learn the craft — no experience needed.
     </p>
 
-    <div class="grid sm:grid-cols-2 gap-6">
-      <div class="border border-ink/15 rounded-2xl p-6">
-        <h3 class="font-display text-2xl mb-1">Candle Craft Basics</h3>
-        <p class="text-ink/70 text-sm">An introduction to hand-poured, intention-set candles.</p>
-      </div>
-      <div class="border border-ink/15 rounded-2xl p-6">
-        <h3 class="font-display text-2xl mb-1">Herb &amp; Sachet Making</h3>
-        <p class="text-ink/70 text-sm">Blend and craft your own herbal sachets.</p>
-      </div>
-    </div>
+    <!-- Populated by site.js from the Classes tab of the Hare Moon sheet. -->
+    <div id="classes-list" class="grid sm:grid-cols-2 gap-6"></div>
 
     <p class="text-center text-ink/80 mt-12">
       Classes are hosted in person and space is limited — email or message
@@ -197,6 +189,35 @@
         <svg viewBox="0 0 24 24" class="w-5 h-5 fill-current"><path d="M16.5 2h-3.1v13.2c0 1.4-1.1 2.5-2.5 2.5s-2.5-1.1-2.5-2.5 1.1-2.5 2.5-2.5c.25 0 .49.04.72.1V9.6a5.6 5.6 0 0 0-.72-.05A5.65 5.65 0 1 0 16.5 15.2V8.9a7.4 7.4 0 0 0 4.2 1.3V7.1a4.3 4.3 0 0 1-4.2-4.2V2z"/></svg>
       </a>
     </div>
+
+    <div class="mt-16 pt-12 border-t border-ink/10">
+      <h3 class="font-display text-3xl mb-2">Stay in the Loop</h3>
+      <p class="text-ink/70 text-sm mb-6">
+        Want to hear about new classes and pieces? Leave your info and
+        Heather will keep you posted.
+      </p>
+
+      <form id="contact-list-form" name="contact-list" method="POST"
+            action="https://script.google.com/macros/s/AKfycby8ntDOjaLZRI4GDqSLHBIJiEpf8ev4yS0Tq2TVvFsqCxdLZlKfufm7bJrHPIErorDISg/exec"
+            class="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-end gap-3 justify-center">
+        <p class="hidden" aria-hidden="true">
+          <label>Leave this field empty: <input name="bot-field" tabindex="-1" autocomplete="off"></label>
+        </p>
+        <label for="cl-name" class="sr-only">Name</label>
+        <input id="cl-name" class="px-4 py-2 rounded-full border border-ink/20 text-sm w-full sm:w-auto"
+               type="text" name="name" required autocomplete="name" placeholder="Name">
+        <label for="cl-email" class="sr-only">Email address</label>
+        <input id="cl-email" class="px-4 py-2 rounded-full border border-ink/20 text-sm w-full sm:w-auto"
+               type="email" name="email" required autocomplete="email" placeholder="Email address">
+        <label for="cl-phone" class="sr-only">Phone (optional)</label>
+        <input id="cl-phone" class="px-4 py-2 rounded-full border border-ink/20 text-sm w-full sm:w-auto"
+               type="tel" name="phone" autocomplete="tel" placeholder="Phone (optional)">
+        <button type="submit" class="px-8 py-2 rounded-full bg-ink text-cream font-semibold uppercase tracking-wider text-sm hover:bg-teal transition-colors">
+          Sign Up
+        </button>
+      </form>
+      <p id="contact-list-status" role="status" aria-live="polite" class="text-sm mt-4"></p>
+    </div>
   </div>
 </section>
 
@@ -206,6 +227,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-<script src="assets/js/site.js"></script>
+<script type="module" src="assets/js/site.js"></script>
 </body>
 </html>
