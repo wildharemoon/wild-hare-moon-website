@@ -4,30 +4,37 @@ document.getElementById('year').textContent = new Date().getFullYear();
 
 gsap.registerPlugin(ScrollTrigger);
 
+// The reduced-motion CSS rule already shows .reveal/.hero-reveal at full
+// opacity, so people who prefer reduced motion just skip straight to that
+// end state — no animation, no ScrollTrigger work.
+const noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 // Hero content is already in view on load, so it gets a simple staggered
 // fade-in rather than a ScrollTrigger (which can get stuck mid-progress
 // for elements whose trigger point is already past on initial layout).
-gsap.to('#hero-mark, #hero-tagline, #hero-cta', {
-  opacity: 1,
-  y: 0,
-  duration: 0.8,
-  ease: 'power2.out',
-  stagger: 0.15,
-  delay: 0.1,
-});
-
-document.querySelectorAll('section .reveal').forEach((el) => {
-  gsap.to(el, {
+if (!noMotion) {
+  gsap.to('#hero-mark, #hero-tagline, #hero-cta', {
     opacity: 1,
     y: 0,
     duration: 0.8,
     ease: 'power2.out',
-    scrollTrigger: {
-      trigger: el,
-      start: 'top 85%',
-    },
+    stagger: 0.15,
+    delay: 0.1,
   });
-});
+
+  document.querySelectorAll('section .reveal').forEach((el) => {
+    gsap.to(el, {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 85%',
+      },
+    });
+  });
+}
 
 /** Escape sheet-supplied text before it reaches innerHTML. */
 function escapeHtml(str) {
@@ -72,12 +79,14 @@ async function loadClasses() {
       ? upcoming.map(classCard).join('')
       : '<p class="text-ink/70 text-sm reveal sm:col-span-2 text-center">No classes currently scheduled &mdash; check back soon.</p>';
 
-    document.querySelectorAll('#classes-list .reveal').forEach((el) => {
-      gsap.to(el, {
-        opacity: 1, y: 0, duration: 0.6, ease: 'power2.out',
-        scrollTrigger: { trigger: el, start: 'top 90%' },
+    if (!noMotion) {
+      document.querySelectorAll('#classes-list .reveal').forEach((el) => {
+        gsap.to(el, {
+          opacity: 1, y: 0, duration: 0.6, ease: 'power2.out',
+          scrollTrigger: { trigger: el, start: 'top 90%' },
+        });
       });
-    });
+    }
   } catch (err) {
     list.innerHTML = '<p class="text-ink/70 text-sm reveal sm:col-span-2 text-center">No classes currently scheduled &mdash; check back soon.</p>';
     console.error('Failed to load classes:', err);
@@ -114,7 +123,7 @@ if (clStatus) clForm?.addEventListener('submit', async e => {
     // specificity, so which one wins depends on stylesheet source order —
     // an inline style avoids that fight entirely.
     clForm.style.display = 'none';
-    clStatus.style.color = '#4f7d74';
+    clStatus.style.color = '#2f5449';
     clStatus.textContent = 'Thanks — you’re on the list.';
   } catch (err) {
     submit.disabled = false;
